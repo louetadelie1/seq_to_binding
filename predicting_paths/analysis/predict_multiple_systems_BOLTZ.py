@@ -1,16 +1,3 @@
-"""
-Predict on all kNN-filtered residue triplets for each protein, then benchmark
-against experimental ZINC ligand rankings across ALL ready systems (not just
-abeta), summarised into 2 publication figures: AUC and EF, one panel per
-protein.
-
-Uses exp_2_negative_data's trained weights (real-MD-distance-trained) as-is,
-but at inference time the distance matrix comes from `ca_dist_matrix_boltz.pkl`
-(Boltz diffusion-sample mean, see generate_boltz_distances.py in this same
-directory) instead of MD -- "train on MD, infer with Boltz" from the
-conversation record. No retraining involved.
-"""
-
 from transformers import AutoModel, AutoTokenizer
 import torch
 import glob
