@@ -1,0 +1,39 @@
+chain_num = 3, line_num = 2
+System ZINC000013581268 already in tracking file, skipping to next (line 3)...
+Source data missing for ZINC000024515311 at /ptmp/adlouet/IDRome_v4/P4/69/34/1_953 (traj.xtc/top.pdb not found), skipping to next (line 4)...
+Processing: ZINC000229358068 | Q9_H7_P9_1_101
+Note that major changes are planned in future for trjconv, to improve usability and utility.
+Select group for output
+Selected 1: 'Protein'
+Processing zinc param
+Wrapped up ZINC000229358068
+/ptmp/adlouet/mass_produce_md_simulations_idrome/simulations/Q9/H7/P9/1_101/ZINC000229358068/ZINC000229358068.param/system
+Done processing zinc param
+Submitted batch job 10815990
+                                  
+================================= 
+Global information about the job: 
+================================= 
+  
+Job owner: adlouet(23909)
+Job name:  run_prep
+Node list: vipa1171
+Job start: Mon Aug  3 16:01:57 CEST 2026
+Job end:   Mon Aug  3 16:03:10 CEST 2026
+Work dir:  /ptmp/adlouet/mass_produce_md_simulations_idrome/vipergpu_scripts/./
+Command:   /viper/ptmp2/adlouet/mass_produce_md_simulations_idrome/vipergpu_scripts/generate_complex_submit.sh
+  
+  
+  
+==========================================================================================
+Information on jobsteps (Note: MaxRSS/AveRSS is the maximum/average over all 
+tasks of the per-task memory high-water marks; cf. "man sacct"): 
+==========================================================================================
+  
+JobID            JobName NNodes NTasks  NCPUS       MaxRSS       AveRSS    Elapsed ExitCode
+------------- ---------- ------ ------ ------ ------------ ------------ ---------- --------
+10815914        run_prep      1            96                             00:01:13      0:0
+  
+Maximum memory per node: 0.469737 GB (defined as MaxRSS*Ntasks/NNodes)
+CPU utilization: 1.6 %
+  

@@ -1,0 +1,28 @@
+                     :-) GROMACS - gmx trjconv, 2025.1 (-:
+
+Executable:   /mpcdf/soft/RHEL_9/packages/znver4/gromacs/gcc_13-13.3.0-openmpi_5.0-5.0.7-rocm_6.3-6.3.4/2025.1/bin/gmx_mpi
+Data prefix:  /mpcdf/soft/RHEL_9/packages/znver4/gromacs/gcc_13-13.3.0-openmpi_5.0-5.0.7-rocm_6.3-6.3.4/2025.1
+Working dir:  /viper/ptmp2/adlouet/mass_produce_md_simulations_idrome/simulations/Q4/G1/63/562_621
+Command line:
+  gmx_mpi trjconv -f /ptmp/adlouet/IDRome_v4/Q4/G1/63/562_621/traj.xtc -s /ptmp/adlouet/IDRome_v4/Q4/G1/63/562_621/top.pdb -o pair.pdb -sep -skip 63
+
+Will write pdb: Protein data bank file
+Group     0 (         System) has    60 elements
+Group     1 (        Protein) has    60 elements
+Group     2 (      Protein-H) has    60 elements
+Group     3 (        C-alpha) has    60 elements
+Group     4 (       Backbone) has    60 elements
+Group     5 (      MainChain) has    60 elements
+Group     6 (   MainChain+Cb) has    60 elements
+Group     7 (    MainChain+H) has    60 elements
+Group     8 (      SideChain) has     0 elements
+Group     9 (    SideChain-H) has     0 elements
+Select a group: Reading frame       0 time 84000.000   
+Precision of /ptmp/adlouet/IDRome_v4/Q4/G1/63/562_621/traj.xtc is 0.001 (nm)
+Reading frame       1 time 91000.000    ->  frame      0 time 84000.000      Reading frame       2 time 98000.000   Reading frame       3 time 105000.000   Reading frame       4 time 112000.000   Reading frame       5 time 119000.000   Reading frame       6 time 126000.000   Reading frame       7 time 133000.000   Reading frame       8 time 140000.000   Reading frame       9 time 147000.000   Reading frame      10 time 154000.000   Reading frame      11 time 161000.000   Reading frame      12 time 168000.000   Reading frame      13 time 175000.000   Reading frame      14 time 182000.000   Reading frame      15 time 189000.000   Reading frame      16 time 196000.000   Reading frame      17 time 203000.000   Reading frame      18 time 210000.000   Reading frame      19 time 217000.000   Reading frame      20 time 224000.000   Reading frame      30 time 294000.000   Reading frame      40 time 364000.000   Reading frame      50 time 434000.000   Reading frame      60 time 504000.000   Reading frame      70 time 574000.000   Reading frame      80 time 644000.000   Reading frame      90 time 714000.000   Reading frame     100 time 784000.000   Reading frame     110 time 854000.000   Reading frame     120 time 924000.000   Reading frame     130 time 994000.000   Reading frame     140 time 1064000.000   Reading frame     150 time 1134000.000   Reading frame     160 time 1204000.000   Reading frame     170 time 1274000.000   Reading frame     180 time 1344000.000   Reading frame     190 time 1414000.000    ->  frame      3 time 1407000.000      Reading frame     200 time 1484000.000   Reading frame     300 time 2184000.000   Reading frame     400 time 2884000.000   Reading frame     500 time 3584000.000   Reading frame     600 time 4284000.000   Reading frame     700 time 4984000.000   Reading frame     800 time 5684000.000   Reading frame     900 time 6384000.000   
+
+Last written: frame     15 time 6699000.000
+
+
+GROMACS reminds you: "C has the power of assembly language and the convenience of... assembly language." (Dennis Ritchie)
+

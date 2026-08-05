@@ -1,0 +1,28 @@
+                     :-) GROMACS - gmx trjconv, 2025.1 (-:
+
+Executable:   /mpcdf/soft/RHEL_9/packages/znver4/gromacs/gcc_13-13.3.0-openmpi_5.0-5.0.7-rocm_6.3-6.3.4/2025.1/bin/gmx_mpi
+Data prefix:  /mpcdf/soft/RHEL_9/packages/znver4/gromacs/gcc_13-13.3.0-openmpi_5.0-5.0.7-rocm_6.3-6.3.4/2025.1
+Working dir:  /viper/ptmp2/adlouet/mass_produce_md_simulations_idrome/simulations/Q3/LI/77/1_160
+Command line:
+  gmx_mpi trjconv -f /ptmp/adlouet/IDRome_v4/Q3/LI/77/1_160/traj.xtc -s /ptmp/adlouet/IDRome_v4/Q3/LI/77/1_160/top.pdb -o pair.pdb -sep -skip 63
+
+Will write pdb: Protein data bank file
+Group     0 (         System) has   160 elements
+Group     1 (        Protein) has   160 elements
+Group     2 (      Protein-H) has   160 elements
+Group     3 (        C-alpha) has   160 elements
+Group     4 (       Backbone) has   160 elements
+Group     5 (      MainChain) has   160 elements
+Group     6 (   MainChain+Cb) has   160 elements
+Group     7 (    MainChain+H) has   160 elements
+Group     8 (      SideChain) has     0 elements
+Group     9 (    SideChain-H) has     0 elements
+Select a group: Reading frame       0 time 96000.000   
+Precision of /ptmp/adlouet/IDRome_v4/Q3/LI/77/1_160/traj.xtc is 0.001 (nm)
+Reading frame       1 time 104000.000    ->  frame      0 time 96000.000      Reading frame       2 time 112000.000   Reading frame       3 time 120000.000   Reading frame       4 time 128000.000   Reading frame       5 time 136000.000   Reading frame       6 time 144000.000   Reading frame       7 time 152000.000   Reading frame       8 time 160000.000   Reading frame       9 time 168000.000   Reading frame      10 time 176000.000   Reading frame      11 time 184000.000   Reading frame      12 time 192000.000   Reading frame      13 time 200000.000   Reading frame      14 time 208000.000   Reading frame      15 time 216000.000   Reading frame      16 time 224000.000   Reading frame      17 time 232000.000   Reading frame      18 time 240000.000   Reading frame      19 time 248000.000   Reading frame      20 time 256000.000   Reading frame      30 time 336000.000   Reading frame      40 time 416000.000   Reading frame      50 time 496000.000   Reading frame      60 time 576000.000   Reading frame      70 time 656000.000   Reading frame      80 time 736000.000   Reading frame      90 time 816000.000   Reading frame     100 time 896000.000   Reading frame     110 time 976000.000   Reading frame     120 time 1056000.000   Reading frame     130 time 1136000.000   Reading frame     140 time 1216000.000   Reading frame     150 time 1296000.000   Reading frame     160 time 1376000.000   Reading frame     170 time 1456000.000   Reading frame     180 time 1536000.000   Reading frame     190 time 1616000.000    ->  frame      3 time 1608000.000      Reading frame     200 time 1696000.000   Reading frame     300 time 2496000.000   Reading frame     400 time 3296000.000   Reading frame     500 time 4096000.000   Reading frame     600 time 4896000.000   Reading frame     700 time 5696000.000   Reading frame     800 time 6496000.000   Reading frame     900 time 7296000.000   
+
+Last written: frame     15 time 7656000.000
+
+
+GROMACS reminds you: "Please implement proper hep writing" (GROMACS)
+

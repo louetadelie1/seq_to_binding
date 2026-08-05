@@ -1,0 +1,41 @@
+chain_num = 0, line_num = 10
+Source data missing for ZINC000001811680 at /ptmp/adlouet/IDRome_v4/Q1/43/24/1024_1055 (traj.xtc/top.pdb not found), skipping to next (line 11)...
+Source data missing for ZINC000124478475 at /ptmp/adlouet/IDRome_v4/P5/50/81/1_206 (traj.xtc/top.pdb not found), skipping to next (line 12)...
+Source data missing for ZINC000002343737 at /ptmp/adlouet/IDRome_v4/Q6/NU/Q4/1_110 (traj.xtc/top.pdb not found), skipping to next (line 13)...
+Source data missing for ZINC000013549677 at /ptmp/adlouet/IDRome_v4/Q1/34/85/135_303 (traj.xtc/top.pdb not found), skipping to next (line 14)...
+Processing: ZINC000000362122 | Q9_BV_A0_305_490
+Note that major changes are planned in future for trjconv, to improve usability and utility.
+Select group for output
+Selected 1: 'Protein'
+Processing zinc param
+Wrapped up ZINC000000362122
+/ptmp/adlouet/mass_produce_md_simulations_idrome/simulations/Q9/BV/A0/305_490/ZINC000000362122/ZINC000000362122.param/system
+Done processing zinc param
+Submitted batch job 10818300
+                                  
+================================= 
+Global information about the job: 
+================================= 
+  
+Job owner: adlouet(23909)
+Job name:  run_prep
+Node list: vipa1088
+Job start: Mon Aug  3 20:56:38 CEST 2026
+Job end:   Mon Aug  3 20:57:53 CEST 2026
+Work dir:  /ptmp/adlouet/mass_produce_md_simulations_idrome/vipergpu_scripts
+Command:   /ptmp/adlouet/mass_produce_md_simulations_idrome/vipergpu_scripts/generate_complex_submit.sh
+  
+  
+  
+==========================================================================================
+Information on jobsteps (Note: MaxRSS/AveRSS is the maximum/average over all 
+tasks of the per-task memory high-water marks; cf. "man sacct"): 
+==========================================================================================
+  
+JobID            JobName NNodes NTasks  NCPUS       MaxRSS       AveRSS    Elapsed ExitCode
+------------- ---------- ------ ------ ------ ------------ ------------ ---------- --------
+10817474        run_prep      1            96                             00:01:15      0:0
+  
+Maximum memory per node: 0.469363 GB (defined as MaxRSS*Ntasks/NNodes)
+CPU utilization: 1.6 %
+  
