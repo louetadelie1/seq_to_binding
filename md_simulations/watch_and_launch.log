@@ -1,3 +1,0 @@
-2026-08-03 12:55:45 watcher started, PID 4085287, watching job 10814292
-2026-08-03 12:57:50 watcher started, PID 1554416, watching job 10814292
-2026-08-03 14:07:40 FAILURE: run_first (10814292) ended in state=FAILED without ever running. NOT launching chains 1-7.

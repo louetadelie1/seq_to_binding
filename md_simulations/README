@@ -1,4 +1,0 @@
-
-# this generates 8 chains since there are 8 resourecs availbale with viperpgu
-for i in {0..7}; do sbatch generate_complex_submit.sh $i; done                  
-

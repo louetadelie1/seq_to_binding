@@ -1,28 +1,0 @@
-                     :-) GROMACS - gmx trjconv, 2025.1 (-:
-
-Executable:   /mpcdf/soft/RHEL_9/packages/znver4/gromacs/gcc_13-13.3.0-openmpi_5.0-5.0.7-rocm_6.3-6.3.4/2025.1/bin/gmx_mpi
-Data prefix:  /mpcdf/soft/RHEL_9/packages/znver4/gromacs/gcc_13-13.3.0-openmpi_5.0-5.0.7-rocm_6.3-6.3.4/2025.1
-Working dir:  /viper/ptmp2/adlouet/mass_produce_md_simulations_idrome/simulations/Q3/SX/Z3/1_181
-Command line:
-  gmx_mpi trjconv -f /ptmp/adlouet/IDRome_v4/Q3/SX/Z3/1_181/traj.xtc -s /ptmp/adlouet/IDRome_v4/Q3/SX/Z3/1_181/top.pdb -o pair.pdb -sep -skip 63
-
-Will write pdb: Protein data bank file
-Group     0 (         System) has   181 elements
-Group     1 (        Protein) has   181 elements
-Group     2 (      Protein-H) has   181 elements
-Group     3 (        C-alpha) has   181 elements
-Group     4 (       Backbone) has   181 elements
-Group     5 (      MainChain) has   181 elements
-Group     6 (   MainChain+Cb) has   181 elements
-Group     7 (    MainChain+H) has   181 elements
-Group     8 (      SideChain) has     0 elements
-Group     9 (    SideChain-H) has     0 elements
-Select a group: Reading frame       0 time 110000.000   
-Precision of /ptmp/adlouet/IDRome_v4/Q3/SX/Z3/1_181/traj.xtc is 0.001 (nm)
-Reading frame       1 time 120000.000    ->  frame      0 time 110000.000      Reading frame       2 time 130000.000   Reading frame       3 time 140000.000   Reading frame       4 time 150000.000   Reading frame       5 time 160000.000   Reading frame       6 time 170000.000   Reading frame       7 time 180000.000   Reading frame       8 time 190000.000   Reading frame       9 time 200000.000   Reading frame      10 time 210000.000   Reading frame      11 time 220000.000   Reading frame      12 time 230000.000   Reading frame      13 time 240000.000   Reading frame      14 time 250000.000   Reading frame      15 time 260000.000   Reading frame      16 time 270000.000   Reading frame      17 time 280000.000   Reading frame      18 time 290000.000   Reading frame      19 time 300000.000   Reading frame      20 time 310000.000   Reading frame      30 time 410000.000   Reading frame      40 time 510000.000   Reading frame      50 time 610000.000   Reading frame      60 time 710000.000   Reading frame      70 time 810000.000   Reading frame      80 time 910000.000   Reading frame      90 time 1010000.000   Reading frame     100 time 1110000.000   Reading frame     110 time 1210000.000   Reading frame     120 time 1310000.000   Reading frame     130 time 1410000.000   Reading frame     140 time 1510000.000   Reading frame     150 time 1610000.000   Reading frame     160 time 1710000.000   Reading frame     170 time 1810000.000   Reading frame     180 time 1910000.000   Reading frame     190 time 2010000.000    ->  frame      3 time 2000000.000      Reading frame     200 time 2110000.000   Reading frame     300 time 3110000.000   Reading frame     400 time 4110000.000   Reading frame     500 time 5110000.000   Reading frame     600 time 6110000.000   Reading frame     700 time 7110000.000   Reading frame     800 time 8110000.000   Reading frame     900 time 9110000.000   
-
-Last written: frame     15 time 9560000.000
-
-
-GROMACS reminds you: "Should we force science down the throats of those that have no taste for it? Is it our duty to drag them kicking and screaming into the twenty-first century? I am afraid that it is." (George Porter)
-

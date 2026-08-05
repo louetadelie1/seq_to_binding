@@ -1,28 +1,0 @@
-                     :-) GROMACS - gmx trjconv, 2025.1 (-:
-
-Executable:   /mpcdf/soft/RHEL_9/packages/znver4/gromacs/gcc_13-13.3.0-openmpi_5.0-5.0.7-rocm_6.3-6.3.4/2025.1/bin/gmx_mpi
-Data prefix:  /mpcdf/soft/RHEL_9/packages/znver4/gromacs/gcc_13-13.3.0-openmpi_5.0-5.0.7-rocm_6.3-6.3.4/2025.1
-Working dir:  /viper/ptmp2/adlouet/mass_produce_md_simulations_idrome/simulations/Q9/6A/Y2/1_219
-Command line:
-  gmx_mpi trjconv -f /ptmp/adlouet/IDRome_v4/Q9/6A/Y2/1_219/traj.xtc -s /ptmp/adlouet/IDRome_v4/Q9/6A/Y2/1_219/top.pdb -o pair.pdb -sep -skip 63
-
-Will write pdb: Protein data bank file
-Group     0 (         System) has   219 elements
-Group     1 (        Protein) has   219 elements
-Group     2 (      Protein-H) has   219 elements
-Group     3 (        C-alpha) has   219 elements
-Group     4 (       Backbone) has   219 elements
-Group     5 (      MainChain) has   219 elements
-Group     6 (   MainChain+Cb) has   219 elements
-Group     7 (    MainChain+H) has   219 elements
-Group     8 (      SideChain) has     0 elements
-Group     9 (    SideChain-H) has     0 elements
-Select a group: Reading frame       0 time 165000.000   
-Precision of /ptmp/adlouet/IDRome_v4/Q9/6A/Y2/1_219/traj.xtc is 0.001 (nm)
-Reading frame       1 time 180000.000    ->  frame      0 time 165000.000      Reading frame       2 time 195000.000   Reading frame       3 time 210000.000   Reading frame       4 time 225000.000   Reading frame       5 time 240000.000   Reading frame       6 time 255000.000   Reading frame       7 time 270000.000   Reading frame       8 time 285000.000   Reading frame       9 time 300000.000   Reading frame      10 time 315000.000   Reading frame      11 time 330000.000   Reading frame      12 time 345000.000   Reading frame      13 time 360000.000   Reading frame      14 time 375000.000   Reading frame      15 time 390000.000   Reading frame      16 time 405000.000   Reading frame      17 time 420000.000   Reading frame      18 time 435000.000   Reading frame      19 time 450000.000   Reading frame      20 time 465000.000   Reading frame      30 time 615000.000   Reading frame      40 time 765000.000   Reading frame      50 time 915000.000   Reading frame      60 time 1065000.000   Reading frame      70 time 1215000.000   Reading frame      80 time 1365000.000   Reading frame      90 time 1515000.000   Reading frame     100 time 1665000.000   Reading frame     110 time 1815000.000   Reading frame     120 time 1965000.000   Reading frame     130 time 2115000.000   Reading frame     140 time 2265000.000   Reading frame     150 time 2415000.000   Reading frame     160 time 2565000.000   Reading frame     170 time 2715000.000   Reading frame     180 time 2865000.000   Reading frame     190 time 3015000.000    ->  frame      3 time 3000000.000      Reading frame     200 time 3165000.000   Reading frame     300 time 4665000.000   Reading frame     400 time 6165000.000   Reading frame     500 time 7665000.000   Reading frame     600 time 9165000.000   Reading frame     700 time 10665000.000   Reading frame     800 time 12165000.000   Reading frame     900 time 13665000.000   
-
-Last written: frame     15 time 14340000.000
-
-
-GROMACS reminds you: "Just Because the Sun Wants a Place In the Sky" (F. Zappa)
-
