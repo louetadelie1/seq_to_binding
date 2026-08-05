@@ -204,8 +204,6 @@ for protein in PROTEINS:
         if triplet in actives_A: hits += 1
         frac_scan_B_A.append((idx + 1) / len(triplets_B)); frac_find_B_A.append(hits / TOP_ACTIVES)
 
-    # keep both replicate directions (not just their average) so each
-    # per-protein panel can show a mean +/- std band from the two directions
     pred_A_curve  = np.interp(X_GRID, frac_scan_A, frac_find_A)
     pred_B_curve  = np.interp(X_GRID, frac_scan_B, frac_find_B)
     base_AB_curve = np.interp(X_GRID, frac_scan_A_B, frac_find_A_B)
@@ -216,9 +214,6 @@ for protein in PROTEINS:
     ef_base_AB = np.array([np.interp(f, frac_scan_A_B, frac_find_A_B) / f for f in EF_FRACTIONS])
     ef_base_BA = np.array([np.interp(f, frac_scan_B_A, frac_find_B_A) / f for f in EF_FRACTIONS])
 
-    # ── chance baseline: same triplet pools, random order instead of predicted /
-    # p_eq-ranked order, repeated N_CHANCE_SHUFFLES times and pooled across all
-    # four (pool, actives) pairs used above ───────────────────────────────────
     chance_curves, chance_efs = [], []
     for pool, actives in [(pred_triplets, actives_A), (pred_triplets, actives_B),
                            (triplets_A, actives_B), (triplets_B, actives_A)]:
@@ -240,24 +235,13 @@ for protein in PROTEINS:
           f"vs {zinc_A} & {zinc_B} -- done")
 
 
-# ══════════════════════════ 2 summary figures, one panel per protein ══════════════════════════
 ps.set_publication_theme(font_scale=1.3)
 
-# green/violet pair (predicted vs. experiment<->experiment reference) + neutral
-# for chance. Uses PAIRED_LIGHT/PAIRED_DARK rather than PRIMARY/SECONDARY so the
-# two lines stay on the dedicated "exactly two series" pair -- see plot_style.py.
-# Their mean+/-std bands are drawn in BAND_COLOR (light hydro blue), not in
-# these two hues, so every uncertainty band in the paper reads the same way
-# regardless of which brand hue the line above it uses.
 PRED, EXP, MUTED = ps.PAIRED_DARK, ps.PAIRED_LIGHT, ps.MUTED
 N_SYS = len(auc_data)
 ncols = 5
 nrows = int(np.ceil(N_SYS / ncols))
 
-# PLOT 1 -- AUC: one panel per protein. Each panel shows both curves as a mean +/-1 std
-# band over their two directions (n=2): experiment<->experiment is A->B / B->A, and
-# predicted->experiment is predicted->actives_A / predicted->actives_B (i.e. the same
-# ranked list scored against each of the two experimental active sets).
 fig1, axes1 = plt.subplots(nrows, ncols, figsize=(3.4 * ncols, 3.6 * nrows),
                             sharex=True, sharey=True, squeeze=False)
 axes1 = axes1.flatten()
@@ -283,8 +267,6 @@ for i, (ax, (protein, pred_A_curve, pred_B_curve, base_AB_curve, base_BA_curve,
     ax.set_title(PROTEIN_NAMES.get(protein, protein), fontsize=15)
 for ax in axes1[N_SYS:]:
     ax.axis('off')
-# one shared x/y label for the whole grid instead of repeating per panel
-# (fig.supxlabel/supylabel need matplotlib>=3.4; this mpl is 3.1, so fig.text)
 fig1.text(0.5, 0.02, 'Fraction of ranked list screened', ha='center', va='center', fontsize=18)
 fig1.text(0.01, 0.5, f'Fraction of top-{TOP_ACTIVES} actives recovered', ha='center', va='center',
           rotation='vertical', fontsize=18)
@@ -295,10 +277,6 @@ fig1.tight_layout(rect=[0.035, 0.05, 1, 0.90])
 fig1.subplots_adjust(wspace=0.12, hspace=0.35)
 fig1.savefig('figures/summary_auc.png', dpi=300, bbox_inches='tight')
 
-# PLOT 2 -- EF: one panel per protein. Each panel is a grouped bar chart over
-# EF_FRACTIONS, with error bars from each side's two directions (n=2): predicted
-# ->actives_A / predicted->actives_B for the predicted bars, A->B / B->A for the
-# experiment<->experiment bars.
 fig2, axes2 = plt.subplots(nrows, ncols, figsize=(3.4 * ncols, 3.4 * nrows),
                             sharex=True, squeeze=False)
 axes2 = axes2.flatten()
@@ -316,8 +294,6 @@ for i, (ax, (protein, ef_pred_A, ef_pred_B, ef_base_AB, ef_base_BA,
     ax.bar(x_pos, ef_base_mean, width=w, color=EXP, edgecolor='white', linewidth=0.6,
            yerr=ef_base_std, error_kw={'ecolor': MUTED, 'elinewidth': 1.1, 'capthick': 1.1},
            capsize=3, label='Experiment ↔ experiment')
-    # chance/random moved to the rightmost slot in each triplet -- it's the
-    # reference floor, not a third result on equal footing with the other two
     ax.bar(x_pos + w, chance_ef_mean, width=w, color=MUTED, edgecolor='white', linewidth=0.6,
            yerr=chance_ef_std, error_kw={'ecolor': MUTED, 'elinewidth': 1.1, 'capthick': 1.1},
            capsize=3, label='Chance (shuffled triplets)')
