@@ -12,36 +12,30 @@ import mdtraj as md
 import matplotlib.pyplot as plt
 import seaborn as sns
 import glob
+import plot_style as ps
 
 BASE_DIR= "/ptmp/adlouet/camb/sequence_to_binding_paths/comparing_binding_pocket_pred_softwares/"
 
-# ── shared blue-themed publication style, same module every other figure in
-# the paper imports from -- pull it in directly (rather than keeping a local
-# hand-copied palette that can silently drift) so this figure is guaranteed
-# to match ─────────────────────────────────────────────────────────────────
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'paper_final_figures_code'))
-import plot_style as ps
-TOPOLOGY_FILE     = os.path.join(BASE_DIR, 'template_AB.pdb')
-TRAJECTORY_FILE   = os.path.join(BASE_DIR, 'traj_all-skip-0-noW_AB.xtc')
-HANDOFF_PKL       = os.path.join(BASE_DIR, 'ab_handoff.pkl')
-AB42_PATH_TXT     = os.path.join(BASE_DIR, 'my_output', 'ab42_1.txt')
-MEAN_DISTANCE_PKL = os.path.join(BASE_DIR, 'mean_ca_distance_matrix.pkl')
-SCRATCH_DIR       = os.path.join(BASE_DIR, '_p2rank_scratch')
+TOPOLOGY_FILE     = f"{BASE_DIR}/template_AB.pdb"
+TRAJECTORY_FILE   = f"{BASE_DIR}/traj_all-skip-0-noW_AB.xtc"
+HANDOFF_PKL       = f"{BASE_DIR}/ab_handoff.pkl"
+AB42_PATH_TXT     = f"{BASE_DIR}/my_output/ab42_1.txt"
+MEAN_DISTANCE_PKL = f"{BASE_DIR}/mean_ca_distance_matrix.pkl"
+SCRATCH_DIR       = f"{BASE_DIR}/_p2rank_scratch"
 
-NUM_TOP_RESIDUES = 12      # for tools that only give a per-residue score, how many top residues to consider
-DISTANCE_CUTOFF  = 6.0     # Angstroms - residues closer than this get grouped into the same pocket
-POOL_SIZE        = 20000   # how many trajectory frames to subsample down to for the ensemble calculations
+NUM_TOP_RESIDUES = 12     
+DISTANCE_CUTOFF  = 6.0     # Angstroms 
+POOL_SIZE        = 20000   
 
-# ── colors pulled straight from plot_style.py, so this figure matches every
-# other figure in ../paper_final_figures_code exactly ──────────────────────
-PRIMARY       = ps.PRIMARY         # marginal score bars
-SECONDARY     = ps.SECONDARY       # coherence score bars
-TERTIARY      = ps.TERTIARY        # shuttling score bars
-INK_PRIMARY   = ps.INK_PRIMARY     # titles
-INK_SECONDARY = ps.INK_SECONDARY   # tick/axis labels
-INK_MUTED     = ps.INK_MUTED       # footnotes
-BASELINE_GRAY = ps.BASELINE_GRAY   # surviving spines
-SURFACE       = ps.SURFACE         # bar edges / figure background
+
+PRIMARY       = ps.PRIMARY         
+SECONDARY     = ps.SECONDARY      
+TERTIARY      = ps.TERTIARY       
+INK_PRIMARY   = ps.INK_PRIMARY    
+INK_SECONDARY = ps.INK_SECONDARY  
+INK_MUTED     = ps.INK_MUTED      
+BASELINE_GRAY = ps.BASELINE_GRAY   
+SURFACE       = ps.SURFACE    
 
 three_to_one = {
     'ALA': 'A', 'ARG': 'R', 'ASN': 'N', 'ASP': 'D', 'CYS': 'C',
@@ -50,9 +44,7 @@ three_to_one = {
     'SER': 'S', 'THR': 'T', 'TRP': 'W', 'TYR': 'Y', 'VAL': 'V',
 }
 
-# all 5 frames must stay ACTIVE here - the whole point of this version is to
-# evaluate every possible combination of them afterwards, so we need all 5
-# frames' pockets collected up front, not a pre-trimmed subset
+
 frame_info = [
     ('frame_1', 'frame_1_origidx_0'),
     ('frame_2', 'frame_2_origidx_58968'),
@@ -62,7 +54,6 @@ frame_info = [
 ]
 
 
-# ── pick 5 structurally diverse frames from the trajectory ─────────────────
 already_have_frames = all(
     len(glob.glob(os.path.join(BASE_DIR, 'ScanNet', frame_folder, '*.pdb'))) > 0
     for frame_folder, _ in frame_info
@@ -98,7 +89,6 @@ if not already_have_frames:
         full_frame.save_pdb(os.path.join(BASE_DIR, 'ScanNet', f'frame_{rank}', f'frame_{rank}_origidx_{orig_index}.pdb'))
 
 
-# ── mean pairwise C-alpha distance matrix (for the shuttling score) ────────
 if not os.path.exists(MEAN_DISTANCE_PKL):
     topology = md.load_topology(TOPOLOGY_FILE)
     ca_atom_indices = topology.select('name CA')
@@ -125,8 +115,7 @@ else:
         mean_distance_matrix = pickle.load(f)
 
 
-# ── extract pockets from each software -- PocketMiner, CryptoSite, and
-# ScanNet are not explicit pockets, and therefore require clustering of output
+
 all_pocket_rows = []   # every pocket : [software, structure, pocket_rank, score, n_residues, residues]
 
 for frame_folder, frame_name in frame_info:
@@ -220,9 +209,7 @@ for frame_folder, frame_name in frame_info:
 
         top_residues = sorted(per_residue_scores.keys(), key=per_residue_scores.get, reverse=True)[:NUM_TOP_RESIDUES]
 
-        # start: every top residue is its own tiny pocket, then repeatedly
-        # merge any two pockets that have a residue pair within DISTANCE_CUTOFF,
-        # restarting the scan after every merge (list size changed underneath us)
+
         clusters = [[r] for r in top_residues]
         merged_something = True
         while merged_something:
@@ -257,7 +244,6 @@ for frame_folder, frame_name in frame_info:
                                      len(cluster), residue_labels])
 
 
-# ── score every pocket against the real MD handoff matrix ──────────────────
 with open(HANDOFF_PKL, 'rb') as f:
     handoff_matrix = pickle.load(f)
 n_residues = handoff_matrix.shape[0]
@@ -275,7 +261,6 @@ for i in range(n_residues):
         if i != j:
             max_offdiagonal_handoff = max(max_offdiagonal_handoff, handoff_matrix[i, j] + handoff_matrix[j, i])
 
-# add my_output's own predicted path (ab42_1.txt), deduplicated to unique residue sets
 raw_clusters = []
 with open(AB42_PATH_TXT) as f:
     lines = f.readlines()
@@ -304,8 +289,6 @@ for residue_set, synthetic_score in seen_residue_sets.items():
     # frame subset below, unchanged, because they were never frame-dependent
     all_pocket_rows.append(['my_output', 'predicted_path', '', synthetic_score, len(residue_numbers), residue_labels])
 
-# top3_pockets_comparison.csv (the single original-structure baseline) is
-# deliberately NOT included anymore - only the 5-frame results + my_output
 
 ground_truth_scores = []   # [software, structure, pocket_rank, n_residues, residues, marginal_score, coherence_score]
 for software, structure, pocket_rank, native_score, n_residues_str, residues in all_pocket_rows:
@@ -331,7 +314,6 @@ with open(os.path.join(BASE_DIR, 'pocket_ground_truth_scores.csv'), 'w', newline
     writer.writerows(ground_truth_scores)
 
 
-# ── shuttling score - does a pocket bridge residues that are far apart? ────
 max_mean_distance = mean_distance_matrix.max()
 
 shuttling_scores = []   # [software, structure, pocket_rank, residues, shuttling_score]
@@ -352,21 +334,6 @@ with open(os.path.join(BASE_DIR, 'pocket_shuttling_scores.csv'), 'w', newline=''
     writer.writerow(['software', 'structure', 'pocket_rank', 'residues', 'shuttling_score'])
     writer.writerows(shuttling_scores)
 
-
-# ── evaluate every combination of the 5 frames, not just their pooled mean ─
-# instead of one mean per software (from ALL 5 frames pooled together),
-# evaluate EVERY possible combination of the 5 frames - frame_1 alone,
-# frame_1+frame_2, frame_2 alone, frame_1+frame_3+frame_5, ... all
-# 2^5 - 1 = 31 non-empty combinations - and compute each software's mean
-# score WITHIN each combination. The final number we report per software is
-# then the mean AND standard deviation of those 31 per-combination means, so
-# we can see how much the result actually depends on which frames happened
-# to be picked.
-#
-# my_output's pockets aren't tagged with a frame at all ('predicted_path'),
-# so they pass the filter for every single combination unchanged - its
-# per-combination mean is IDENTICAL all 31 times, giving it a standard
-# deviation of exactly 0 by construction.
 frame_folder_names = [frame_folder for frame_folder, frame_name in frame_info]
 
 all_frame_combinations = []
@@ -441,22 +408,12 @@ for software in all_software_names:
     shuttling_text = f'{shuttling_mean[software]:.4f} +/- {shuttling_std[software]:.4f}'
     print(f'{software:<15}{n_combos:<10}{marginal_text:<28}{coherence_text:<28}{shuttling_text:<28}')
 
-
-# ── plot: mean +/- std (across all 31 frame combinations) per software,
-# styled with the exact same publication theme as every other figure in
-# ../paper_final_figures_code ───────────────────────────────────────────────
 ps.set_publication_theme(font_scale=1.05)
 
-# display name for the x-axis only -- 'my_output' stays the actual key used
-# everywhere above (dict lookups, all_software_names, etc.); edit this if the
-# method's public name changes again
 SOFTWARE_DISPLAY_NAMES = {
     'my_output': 'Our Method',
 }
 
-# save everything needed to redraw this figure later on any machine with
-# just matplotlib + this one file - no trajectory, no handoff matrix, no
-# tool output folders required
 plot_data = {
     'all_software_names': all_software_names,
     'marginal_mean': marginal_mean,
