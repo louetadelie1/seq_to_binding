@@ -43,14 +43,10 @@ numbering_offset = {
     "HIV1_protease": 0.0,
     "Influenza_neuraminidase": None,  # offset 82 only validated for the 150-loop residues (118/151/152);
                                        # the other 5 residues in that pocket use a different (N2) numbering
-                                       # convention and are not reliable -- excluded until resolved
     "CYP3A4": 21.0,
 }
 
-# display names for figures -- keys are the raw post_processed_ordered_proteins
-# folder names (also numbering_offset's keys), values are what actually gets
-# drawn on axes/labels. Never rename the dict keys above -- only this mapping
-# changes what the reader sees.
+
 PROTEIN_NAMES = {
     "IL-2":                     "IL-2",
     "TEM-1_beta-lactamase":     "TEM-1 β-lactamase",
@@ -65,11 +61,7 @@ PROTEIN_NAMES = {
     "CYP3A4":                   "CYP3A4",
 }
 
-# display names for pockets -- keys are (protein, state) as they appear in
-# pockets_with_per_row_sources.csv, values are the tidied label. Falls back
-# to a plain underscore->space swap (_tidy_state) for any (protein, state)
-# pair not listed here, so a new CSV row never crashes the figure, just
-# renders untidied until it's added below.
+
 POCKET_NAMES = {
     ("IL-2", "apo_closed_hotspot"):                                   "Apo closed hotspot",
     ("IL-2", "apo_transient_open_hotspot"):                           "Apo transient-open hotspot",
@@ -99,7 +91,7 @@ POCKET_NAMES = {
 }
 
 
-random.seed(42)   # reproducible ZINC-pair sampling across runs
+random.seed(42)  
 
 tokeniser  = AutoTokenizer.from_pretrained("facebook/esm2_t12_35M_UR50D")
 esm_model  = AutoModel.from_pretrained("facebook/esm2_t12_35M_UR50D").to(device)
@@ -161,19 +153,17 @@ X_GRID = np.linspace(0, 1, 200)
 
 proteins=sorted(glob.glob(f'/{ordered_protein_base}/*'))
 
-hit_records = []   # (protein_name, best_rank_hit_or_None) -- feeds the H coefficient summary at the end
+hit_records = []  
 hit_records_knee = []
 
-RECALL_THRESHOLD = 0.75   # a pocket counts as "recovered" once >=75% of its residues are in the accepted clusters
+RECALL_THRESHOLD = 0.75  
 pocket_hit_records      = []   # (protein_name, pocket_idx, n_pocket_residues, recovery_rank_or_None, precision_at_recovery_or_None, best_recall_reached)
-pocket_hit_records_knee = []   # same, but the walk is restricted to clusters at/above the knee cutoff
+pocket_hit_records_knee = []  nee cutoff
 
-pocket_recovery_table = []   # one row per literature pocket: true vs predicted residues, accuracy rank, knee cutoff
+pocket_recovery_table = []   
+GROUND_TRUTH_COLOR = ps.PAIRED_DARK   
+POCKET_CMAP        = plt.cm.Reds   
 
-GROUND_TRUTH_COLOR = ps.PAIRED_DARK   # violet wash, distinct from the green predicted-profile line via hue as well as alpha/fill vs. line
-POCKET_CMAP        = plt.cm.Reds   # darker = higher-ranked (rank 1 = highest predicted score)
-
-# ── one shared grid, filled in live as each protein is processed ───────────
 ps.set_publication_theme(font_scale=1.3)
 ALL_NCOLS = min(3, max(len(proteins), 1))
 ALL_NROWS = int(np.ceil(len(proteins) / ALL_NCOLS))
@@ -198,10 +188,7 @@ for protein in proteins:
         print(f"skipping {protein_name}: numbering offset not yet confirmed against UniProt")
         continue
 
-    # binding_profile.txt residue numbers use whatever convention the source literature used
-    # (UniProt canonical, Ambler numbering, mature-chain numbering, full-length numbering
-    # against a truncated domain construct, ...) -- convert to local 1-indexed positions
-    # matching sequence.fasta / ca_dist_matrix_boltz.pkl.
+
     binding_regions_truth = [np.array(r) - int(offset) for r in ast.literal_eval(binding_regions_raw)]
 
     fasta_path = f'{protein}/sequence.fasta'
@@ -230,7 +217,6 @@ for protein in proteins:
         embeddings = esm_model(**inputs).last_hidden_state.squeeze(0).detach().cpu()
 
     # ── distance matrix (Boltz diffusion-sample mean, nm) + kNN candidate
-    # triplets ────────────────────────────────────────────────────────────
     _loaded = pickle.load(open(boltz_dist_path, 'rb'))
     ca_dist_matrix = _loaded['matrix'] if isinstance(_loaded, dict) and 'matrix' in _loaded else _loaded
     n_res = ca_dist_matrix.shape[0]
@@ -315,8 +301,6 @@ for protein in proteins:
     sns.despine(fig=fig)
     fig.tight_layout()
     plt.close()
-
-
 
 
 ############################################ Clustering binding profiles and seeing if they match ############################################
@@ -550,7 +534,6 @@ for protein_name, pdata in protein_data.items():
     # print(f"\nTop clusters above the knee (cluster IDs): {list(top_cluster_above_knee)}")
 
 
-
 ###### Now we compare to experimental ground truth data
 
     cluster_residues = {
@@ -603,7 +586,6 @@ pocket_recovery_df = pocket_recovery_df.merge(
     on=['protein', 'pocket_idx'], how='left'
 )
 
-# numbered citation list, one entry per unique (protein, source_article) pair
 print("\n" + "=" * 80)
 print("Literature sources per protein (numbered -- referenced in the figure caption)")
 print("=" * 80)
@@ -625,7 +607,6 @@ pocket_recovery_df['citation_ref'] = pocket_recovery_df.apply(
 pocket_recovery_df.to_csv('pocket_recovery_summary.csv', index=False)
 
 
-########### Illustration: recovery rank per pocket, colored by within-knee vs beyond-knee vs never recovered ###########
 INK_PRIMARY   = ps.INK_PRIMARY
 STATUS_GOOD   = ps.PAIRED_DARK    # recovered within knee cutoff -- violet, the more emphatic of the pair
 SERIES_BLUE   = ps.PAIRED_LIGHT   # recovered beyond knee cutoff -- green, the lighter of the pair
@@ -637,8 +618,7 @@ BAND_COLOR    = ps.BAND_COLOR
 def _tidy_state(protein, s):
     return POCKET_NAMES.get((protein, s), str(s).replace('_', ' '))
 
-# one section-header row per protein, followed by its pocket rows -- avoids repeating the
-# protein name on every row and keeps the y-axis legible (forest-plot style grouping)
+
 grouped = pocket_recovery_df.sort_values(['protein', 'pocket_idx']).groupby('protein', sort=False)
 combined_rows = []
 for pname, g in grouped:
@@ -659,7 +639,6 @@ ax2 = fig.add_subplot(gs[1], sharey=ax)
 for a in (ax, ax2):
     a.set_facecolor(SURFACE)
 
-# alternating band per protein group, spanning header + its data rows
 band_on = False
 for pname, _ in grouped:
     group_ys = [r['y'] for r in combined_rows if r.get('protein') == pname]
