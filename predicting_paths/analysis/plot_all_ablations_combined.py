@@ -7,7 +7,6 @@ import plot_style as ps
 
 BASE = '/ptmp/adlouet/camb/sequence_to_binding_paths/fine_tuning_experiments'
 
-# (path to summary_data*.pkl relative to BASE, display label)
 SOURCES = [
     ('exp_2_negative_data/figures/summary_data.pkl',
      'MD C-alpha distances'),
