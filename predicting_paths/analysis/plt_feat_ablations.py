@@ -1,28 +1,3 @@
-"""
-Overlay the mean enrichment curve + enrichment factor from EVERY ablation
-condition trained so far on one pair of publication figures. Superset of
-plot_combined_conditions.py (which only covers the original 4 train/inference
--distance conditions) -- this one also pulls in exp_5's and exp_6's
-permutation-invariant variants and all of exp_7's Boltz+Jacobian combinations
-(full, lean mean_c-only, and permutation-invariant).
-
-  exp_2_negative_data/figures/summary_data.pkl                                    -- MD C-alpha distances
-  exp_3_no_dist/figures/summary_data.pkl                                          -- No distances (sequence only)
-  exp_5_boltz_distances_inf_pred/figures/summary_data.pkl                         -- Boltz C-alpha distances
-  exp_5_boltz_distances_inf_pred/permutations/figures/summary_data_permutations.pkl -- Boltz distances, permutation-invariant encoder
-  exp_6_esm_jacobian_contacts_no_c_alpha/figures/summary_data.pkl                 -- ESM-2 categorical-Jacobian coupling only
-  exp_6_esm_jacobian_contacts_no_c_alpha/permuations/figures/summary_data_permutations.pkl -- Jacobian coupling, permutation-invariant encoder
-  exp_7_botz_jacobian_combined/figures/summary_data.pkl                          -- Boltz distances + Jacobian coupling, combined
-  exp_7_botz_jacobian_combined/figures_lean/summary_data_lean_coupling.pkl       -- Boltz distances + lean Jacobian coupling (mean_c only)
-  exp_7_botz_jacobian_combined/permuations/figures/summary_data_permutations.pkl -- Boltz + Jacobian coupling, permutation-invariant encoder
-
-Each summary_data*.pkl is written by that condition's own
-predict_multiple_systems_average*.py script (see the 'cache raw per-system
-arrays' block at the end of each). Any condition whose predict script hasn't
-been (re)run yet is skipped with a printed warning rather than crashing --
-rerun that condition's predict script first if you want it included.
-"""
-
 import os
 import pickle
 import numpy as np
@@ -32,7 +7,6 @@ import plot_style as ps
 
 BASE = '/ptmp/adlouet/camb/sequence_to_binding_paths/fine_tuning_experiments'
 
-# (path to summary_data*.pkl relative to BASE, display label)
 SOURCES = [
     ('exp_2_negative_data/figures/summary_data.pkl',
      'MD C-alpha distances'),
@@ -55,21 +29,12 @@ for rel_path, label in SOURCES:
     results.append(d)
     print(f"{label:48s} n={len(d['systems_used']):2d} systems: {d['systems_used']}")
 
-if not results:
-    raise SystemExit("No summary_data*.pkl files found for any condition -- "
-                      "run at least one predict_multiple_systems_average*.py first.")
-
 ps.set_publication_theme(font_scale=1.3)
 MUTED = ps.MUTED
-# dynamic brand-rotation palette, sized to however many conditions were actually
-# found. categorical_blues (not blues): these color DISTINCT conditions, not a
-# magnitude -- blues() is the hydro-blue sequential ramp for that job; this is
-# the validated AZURE/GREEN/VIOLET/AMBER rotation instead (see plot_style.py).
 COLORS = ps.categorical_blues(len(results))
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12.5, 5.2))
 
-# PANEL 1 -- mean enrichment curve +/- 1 std across systems, one line per condition
 ax1.plot([0, 1], [0, 1], color=MUTED, lw=1.0, ls='--', zorder=1, label='Random')
 for d, color in zip(results, COLORS):
     X_GRID = d['X_GRID']
@@ -90,7 +55,6 @@ ax1.set_title('AUC Curve across systems', fontsize=15)
 ax1.tick_params(axis='both', labelsize=13)
 # ax1.legend(frameon=False, fontsize=11,bbox_to_anchor=(1.1, 1), loc='upper right')
 
-# PANEL 2 -- mean enrichment factor +/- 1 std across systems, grouped bars per condition
 ef_fractions = results[0]['ef_fractions']
 n_conditions = len(results)
 w = 0.8 / n_conditions
