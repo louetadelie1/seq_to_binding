@@ -158,7 +158,7 @@ hit_records_knee = []
 
 RECALL_THRESHOLD = 0.75  
 pocket_hit_records      = []   # (protein_name, pocket_idx, n_pocket_residues, recovery_rank_or_None, precision_at_recovery_or_None, best_recall_reached)
-pocket_hit_records_knee = []  nee cutoff
+pocket_hit_records_knee = []  
 
 pocket_recovery_table = []   
 GROUND_TRUTH_COLOR = ps.PAIRED_DARK   
